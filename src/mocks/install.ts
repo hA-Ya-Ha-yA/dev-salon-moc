@@ -1383,54 +1383,11 @@ route(
   },
 )
 
-route(
-  "GET",
-  pattern("/api/s/:slug/reservations/:token"),
-  ({ params }) => {
-    const r = getMockState().reservations.find(
-      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
-    )
-    if (!r) return notFound()
-    return json(reservationDetailJson(r))
-  },
-)
-
-route(
-  "PUT",
-  pattern("/api/s/:slug/reservations/:token"),
-  async ({ params, body }) => {
-    const r = getMockState().reservations.find(
-      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
-    )
-    if (!r) return notFound()
-    const b = bodyRecord(body)
-    if (typeof b.start_at === "string") {
-      const menu = findMenuById(r.menu_id)
-      r.start_at = b.start_at
-      r.service_end_at = isoAddMinutes(b.start_at, menu?.duration_minutes ?? 60)
-    }
-    if (typeof b.customer_name === "string") r.customer_name = b.customer_name
-    if (typeof b.customer_email === "string") r.customer_email = b.customer_email
-    if (b.customer_phone !== undefined) r.customer_phone = (b.customer_phone as string) ?? null
-    if (b.notes !== undefined) r.notes = (b.notes as string) ?? null
-    persistMockState()
-    return json(reservationDetailJson(r))
-  },
-)
-
-route(
-  "POST",
-  pattern("/api/s/:slug/reservations/:token/cancel"),
-  ({ params }) => {
-    const r = getMockState().reservations.find(
-      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
-    )
-    if (!r) return notFound()
-    r.status = "CANCELED"
-    persistMockState()
-    return json(reservationDetailJson(r))
-  },
-)
+/*
+ * 注意: `/api/s/:slug/reservations/lookup*` と `/api/s/:slug/reservations/:token` は
+ * どちらも 5 セグメントで衝突するため、`lookup` 系のルートを先に登録して
+ * `:token` にフォールバックさせないようにしている。
+ */
 
 route(
   "POST",
@@ -1493,12 +1450,80 @@ route(
 route(
   "GET",
   pattern("/api/s/:slug/reservations/lookup"),
-  ({ request }) => {
-    // 認可: Authorization: Bearer ... を受け取るが、モックでは無視
-    void request
+  ({ params, request }) => {
     const state = getMockState()
-    const details = state.reservations.map(reservationDetailJson)
-    return json(details)
+    // Authorization: Bearer <lookup_token> を検証し、
+    // OTP を通した連絡先（email/電話）で予約を絞り込む。
+    const authHeader = request.headers.get("authorization") ?? ""
+    const bearer = authHeader.startsWith("Bearer ")
+      ? authHeader.slice("Bearer ".length).trim()
+      : ""
+    const tokenRow = bearer
+      ? state.lookup_tokens.find(
+          (t) => t.token === bearer && t.shop_slug === params.slug,
+        )
+      : undefined
+    let items = state.reservations
+    if (tokenRow?.contact) {
+      const c = tokenRow.contact.trim().toLowerCase()
+      const matches = state.reservations.filter((r) => {
+        const email = r.customer_email?.trim().toLowerCase() ?? ""
+        const phone = r.customer_phone?.trim() ?? ""
+        return email === c || phone === tokenRow.contact.trim()
+      })
+      // 該当が無ければモック体験のため全件を返す（Not Found を避ける）。
+      items = matches.length > 0 ? matches : state.reservations
+    }
+    return json(items.map(reservationDetailJson))
+  },
+)
+
+route(
+  "GET",
+  pattern("/api/s/:slug/reservations/:token"),
+  ({ params }) => {
+    const r = getMockState().reservations.find(
+      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
+    )
+    if (!r) return notFound()
+    return json(reservationDetailJson(r))
+  },
+)
+
+route(
+  "PUT",
+  pattern("/api/s/:slug/reservations/:token"),
+  async ({ params, body }) => {
+    const r = getMockState().reservations.find(
+      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
+    )
+    if (!r) return notFound()
+    const b = bodyRecord(body)
+    if (typeof b.start_at === "string") {
+      const menu = findMenuById(r.menu_id)
+      r.start_at = b.start_at
+      r.service_end_at = isoAddMinutes(b.start_at, menu?.duration_minutes ?? 60)
+    }
+    if (typeof b.customer_name === "string") r.customer_name = b.customer_name
+    if (typeof b.customer_email === "string") r.customer_email = b.customer_email
+    if (b.customer_phone !== undefined) r.customer_phone = (b.customer_phone as string) ?? null
+    if (b.notes !== undefined) r.notes = (b.notes as string) ?? null
+    persistMockState()
+    return json(reservationDetailJson(r))
+  },
+)
+
+route(
+  "POST",
+  pattern("/api/s/:slug/reservations/:token/cancel"),
+  ({ params }) => {
+    const r = getMockState().reservations.find(
+      (x) => x.confirmation_token === params.token || x.reservation_id === params.token,
+    )
+    if (!r) return notFound()
+    r.status = "CANCELED"
+    persistMockState()
+    return json(reservationDetailJson(r))
   },
 )
 
