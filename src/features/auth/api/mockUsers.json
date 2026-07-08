@@ -1,0 +1,23 @@
+[
+  {
+    "id": "u_001",
+    "email": "customer@example.com",
+    "password_hash": "customer123",
+    "line_user_id": "U-CUSTOMER-001",
+    "role": "CUSTOMER"
+  },
+  {
+    "id": "u_002",
+    "email": "admin@example.com",
+    "password_hash": "admin123",
+    "line_user_id": "U-ADMIN-002",
+    "role": "ADMIN"
+  },
+  {
+    "id": "u_003",
+    "email": "staff@example.com",
+    "password_hash": "staff123",
+    "line_user_id": "U-STAFF-003",
+    "role": "STAFF"
+  }
+]

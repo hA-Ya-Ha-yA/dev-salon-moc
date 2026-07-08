@@ -1,0 +1,87 @@
+[
+  {
+    "id": "res_001",
+    "customerName": "山田 太郎",
+    "customerEmail": "yamada@example.com",
+    "startAt": "2025-03-13T09:00:00+09:00",
+    "endAt": "2025-03-13T10:00:00+09:00",
+    "status": "CONFIRMED",
+    "memo": "初回利用",
+    "createdAt": "2025-03-10T14:00:00+09:00"
+  },
+  {
+    "id": "res_002",
+    "customerName": "佐藤 花子",
+    "customerEmail": "sato@example.com",
+    "startAt": "2025-03-13T11:00:00+09:00",
+    "endAt": "2025-03-13T12:00:00+09:00",
+    "status": "CONFIRMED",
+    "createdAt": "2025-03-11T09:00:00+09:00"
+  },
+  {
+    "id": "res_003",
+    "customerName": "鈴木 一郎",
+    "customerEmail": "suzuki@example.com",
+    "startAt": "2025-03-13T14:00:00+09:00",
+    "endAt": "2025-03-13T15:30:00+09:00",
+    "status": "CONFIRMED",
+    "memo": "90分希望",
+    "createdAt": "2025-03-09T18:00:00+09:00"
+  },
+  {
+    "id": "res_004",
+    "customerName": "田中 美咲",
+    "customerEmail": "tanaka@example.com",
+    "startAt": "2025-03-14T10:00:00+09:00",
+    "endAt": "2025-03-14T11:00:00+09:00",
+    "status": "CONFIRMED",
+    "createdAt": "2025-03-11T12:00:00+09:00"
+  },
+  {
+    "id": "res_005",
+    "customerName": "高橋 健太",
+    "customerEmail": "takahashi@example.com",
+    "startAt": "2025-03-14T13:00:00+09:00",
+    "endAt": "2025-03-14T14:00:00+09:00",
+    "status": "CONFIRMED",
+    "createdAt": "2025-03-10T10:00:00+09:00"
+  },
+  {
+    "id": "res_006",
+    "customerName": "伊藤 恵子",
+    "customerEmail": "ito@example.com",
+    "startAt": "2025-03-14T15:30:00+09:00",
+    "endAt": "2025-03-14T16:30:00+09:00",
+    "status": "CONFIRMED",
+    "memo": "キャンセル待ちから繰り上げ",
+    "createdAt": "2025-03-08T08:00:00+09:00"
+  },
+  {
+    "id": "res_007",
+    "customerName": "渡辺 大輔",
+    "customerEmail": "watanabe@example.com",
+    "startAt": "2025-03-15T09:00:00+09:00",
+    "endAt": "2025-03-15T10:00:00+09:00",
+    "status": "CONFIRMED",
+    "createdAt": "2025-03-12T07:00:00+09:00"
+  },
+  {
+    "id": "res_008",
+    "customerName": "中村 優子",
+    "customerEmail": "nakamura@example.com",
+    "startAt": "2025-03-15T11:00:00+09:00",
+    "endAt": "2025-03-15T12:00:00+09:00",
+    "status": "CONFIRMED",
+    "memo": "午前中希望",
+    "createdAt": "2025-03-07T20:00:00+09:00"
+  },
+  {
+    "id": "res_009",
+    "customerName": "小林 翔太",
+    "customerEmail": "kobayashi@example.com",
+    "startAt": "2025-03-15T14:00:00+09:00",
+    "endAt": "2025-03-15T15:00:00+09:00",
+    "status": "CONFIRMED",
+    "createdAt": "2025-03-11T15:30:00+09:00"
+  }
+]
