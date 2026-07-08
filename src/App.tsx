@@ -56,7 +56,21 @@ function LandingPage() {
 
       <div className="mb-6 flex items-center gap-2 rounded-lg bg-muted px-4 py-3">
         <BadgeAlert className="size-5 shrink-0" />
-        <p className="text-xl font-bold tracking-tight">開発用のページです。</p>
+        <p className="text-xl font-bold tracking-tight">フロントエンド完結モックです。</p>
+      </div>
+
+      <div className="mb-6 space-y-2 rounded-lg border border-dashed border-border bg-muted/40 p-4 text-sm">
+        <p className="font-medium">サインイン用のサンプルアカウント</p>
+        <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+          <li>管理者（オーナー）: <code>admin@example.com</code> / <code>admin123</code></li>
+          <li>管理者（スタッフ）: <code>staff@example.com</code> / <code>staff123</code></li>
+          <li>予約者: <code>customer@example.com</code> / <code>customer123</code></li>
+        </ul>
+        <p className="pt-1 text-xs text-muted-foreground">
+          データは <code>localStorage</code> に保持されます。リセットしたい場合はブラウザのストレージから
+          <code>saas_frontend_mock_state_v1</code> を削除してください。ワンタイムコード（予約照会等）は
+          <code>000000</code> を入力してください。
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -66,7 +80,7 @@ function LandingPage() {
               <UserRound className="size-4" />
               予約者用
             </CardTitle>
-            <CardDescription>開発用: 予約者向け認証ページに遷移します</CardDescription>
+            <CardDescription>予約者向けサロンページに遷移します</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
 
@@ -74,7 +88,7 @@ function LandingPage() {
               <Link to="/s/sample-salon-2026">予約ページへ</Link>
             </Button>
             <Button asChild variant="outline" className="w-full rounded-md">
-              <Link to="/s/sample-salon-2026">予約者新規登録へ</Link>
+              <Link to="/customer/signup?shopId=sample-salon-2026">予約者新規登録へ</Link>
             </Button>
           </CardContent>
         </Card>
@@ -85,7 +99,7 @@ function LandingPage() {
               <ShieldCheck className="size-4" />
               管理者・スタッフ用
             </CardTitle>
-            <CardDescription>開発用: 管理者・スタッフ向け認証ページに遷移します</CardDescription>
+            <CardDescription>管理者・スタッフ向け認証ページに遷移します</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <Button asChild className="w-full rounded-md">
